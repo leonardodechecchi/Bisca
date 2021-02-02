@@ -16,6 +16,14 @@ public class Cards {
         return this.value;
     }
 
+    public int getSeedsValue() {
+        return seed.getValue();
+    }
+
+    public int getValuesValue() {
+        return value.getValue();
+    }
+
     public String toString() {
         return "[" + this.seed + ", " + this.value + "]";
     }

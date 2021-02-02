@@ -18,7 +18,7 @@ public class Deck {
         return deck.get(index);
     }
 
-    public void deleteCardAtIndex(int index) {
+    public void removeCardAtIndex(int index) {
         deck.remove(index);
     }
 

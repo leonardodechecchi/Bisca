@@ -7,11 +7,12 @@ public enum Seeds {
 
     private int value;
 
-    Seeds(int value) {
-        this.value = value;
+    Seeds(int seed) {
+        this.value = seed;
     }
 
     public int getValue() {
         return this.value;
     }
+
 }
