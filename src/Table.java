@@ -13,7 +13,7 @@ public class Table {
         table.put(c, p);
     }
 
-    public Player recordResult() {
+    public Player recordRound() {
         Player winner = null;
         int maxSeedsValue = 0;
         int maxValuesValue = 0;

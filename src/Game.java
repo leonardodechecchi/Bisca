@@ -1,63 +1,51 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Game {
 
-    private Player player1;
-    private Player player2;
+    private List<Player> players;
     private Deck deck;
     private Table table;
 
-    public Game(Player player1, Player player2, Deck deck, Table table) {
-        this.player1 = player1;
-        this.player2 = player2;
+    public Game(ArrayList<Player> players, Deck deck, Table table) {
+        this.players = players;
         this.deck = deck;
         this.table = table;
     }
 
-    public Result playGame() throws InterruptedException {
+    public void playGame() {
 
         Scanner in = new Scanner(System.in);
 
-        while (true) {
-
-            System.out.println(player1);
-            System.out.println(player2);
-
-            deck.shuffleDeck();
-
-            player1.drawCards(deck, 2);
-            player2.drawCards(deck, 2);
-
-            player1.printHand();
-            System.out.print("[Player1] SELECT THE NUMBER OF TAKES: ");
-            player1.setNumOfCards(in.nextInt());
-
-            player2.printHand();
-            System.out.print("[Player2] SELECT THE NUMBER OF TAKES: ");
-            player2.setNumOfCards(in.nextInt());
-
-            int i = 2;
-            while (i > 0) {
-                int numPlayer1 = 0;
-                int numPlayer2 = 0;
-                System.out.println("\n[Player1] SELECT WHICH CARD TO THROW: ");
-                player1.printHand();
-                player1.play(table, in.nextInt() - 1);
-                System.out.println("\n[Player2] SELECT WHICH CARD TO THROW: ");
-                player2.printHand();
-                player2.play(table, in.nextInt() - 1);
-                i--;
-
-                Player winner = table.recordResult();
-                if(winner.equals(player1))
-                   return Result.player1;
-                else if (winner.equals(player2))
-                    return Result.player2;
+        for (int turn = 5; turn > 0; turn--) {
+            for (Player p : players) {
+                p.drawCards(deck, turn);
+            }
+            for (int round = turn; round > 0; round--) {
+                Collections.sort(players);
+                for (Player p : players) {
+                    p.printHand();
+                    System.out.println("[" + p.getIdentifier() + "] SELECT NUM OF CARDS: ");
+                    p.setNumOfCards(in.nextInt());
+                }
+                for (Player p : players) {
+                    p.printHand();
+                    System.out.println("[" + p.getIdentifier() + "] SELECT A CARD TO THROW: ");
+                    p.play(table, in.nextInt());
+                }
+                Player roundWinner = table.recordRound();
+                roundWinner.setNumRoundVinti();
+            }
+            for (Player p : players) {
+                if (p.getNumRoundVinti() != p.getNumOfCards())
+                    p.loseLife();
             }
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Game g = new Game(new Player(), new Player(), new Deck(), new Table());
         g.playGame();
     }
