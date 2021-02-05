@@ -20,15 +20,17 @@ public class Player implements Comparable<Player> {
         return this.hearts;
     }
 
-    public void setNumOfCards(int numOfCards) {
-        this.numOfCards = numOfCards;
+    public void setNumOfCards(int numOfCards, int turn) {
+        if (numOfCards >= 0 && numOfCards <= turn)
+            this.numOfCards = numOfCards;
+        else throw new IllegalArgumentException();
     }
 
     public int getNumOfCards() {
         return this.numOfCards;
     }
 
-    public void setNumRoundVinti() {
+    public void increaseWinRound() {
         numRoundVinti++;
     }
 
