@@ -12,14 +12,12 @@ public class Game {
         this.table = table;
     }
 
-    public void playGame() {
+    public void playGame(int numPlayers) {
 
         Scanner in = new Scanner(System.in);
 
         printInit();
 
-        System.out.print("SELEZIONA IL NUMERO DI GIOCATORI -->  ");
-        int numPlayers = in.nextInt();
         for (int i = 0; i < numPlayers; i++)
             players.add(new Player());
 
@@ -72,8 +70,4 @@ public class Game {
         System.out.println("+-------+-------+-------+-------+");
     }
 
-    public static void main(String[] args) {
-        Game g = new Game(new ArrayList<>(), new Deck(), new Table());
-        g.playGame();
-    }
 }
