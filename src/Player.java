@@ -3,57 +3,56 @@ import java.util.ArrayList;
 public class Player implements Comparable<Player> {
 
     private ArrayList<Cards> hand;
-    private int hearts;
-    private int numOfCards;
-    private int numRoundVinti;
+    private String name;
+    private int lives;
+    private int numCards;
+    private int numRoundsWon;
 
     public Player() {
+        name = getIdentifier();
         hand = new ArrayList<>();
-        hearts = 3;
-        numRoundVinti = 0;
+        lives = 3;
+        numCards = 0;
+        numRoundsWon = 0;
     }
 
-    /**
-     * @return the current hearts player
-     */
-    public int getHearts() {
-        return this.hearts;
+    public int getLives() {
+        return this.lives;
     }
 
-    public void setNumOfCards(int numOfCards, int turn) {
+    public int getNumCards() {
+        return this.numCards;
+    }
+
+    public int getNumRoundsWon() {
+        return this.numRoundsWon;
+    }
+
+    public void setNumCards(int numOfCards, int turn) {
         if (numOfCards >= 0 && numOfCards <= turn)
-            this.numOfCards = numOfCards;
+            this.numCards = numOfCards;
         else throw new IllegalArgumentException();
     }
 
-    public int getNumOfCards() {
-        return this.numOfCards;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void increaseWinRound() {
-        numRoundVinti++;
+    public void wonRound() {
+        this.numRoundsWon++;
     }
 
-    public int getNumRoundVinti() {
-        return numRoundVinti;
+    public void loseLife() {
+        this.lives--;
     }
 
-    /**
-     * Draws cards according to the turn
-     * @param d the deck where to draw
-     * @param turn the current turn
-     */
-    public void drawCards(Deck d, int turn) {
-        for (int i = 0; i < turn; i++) {
+    public void drawCards(Deck d, int numCards) {
+        for (int i = 0; i < numCards; i++) {
             hand.add(d.getCardAtIndex(0));
             d.removeCardAtIndex(0);
         }
     }
 
-    /**
-     * Throw a card
-     * @param t where to throw the card
-     */
     public void play(Table t, int index) {
         if (index < 0 || index > 5)
             throw new IllegalArgumentException();
@@ -61,13 +60,6 @@ public class Player implements Comparable<Player> {
         hand.remove(index);
     }
 
-    public void loseLife() {
-        this.hearts--;
-    }
-
-    /**
-     * Print the current hand
-     */
     public void printHand() {
         int i = 0;
         for (Cards c : hand) {
@@ -80,6 +72,6 @@ public class Player implements Comparable<Player> {
     }
 
     public int compareTo(Player o) {
-        return Integer.compare(this.numRoundVinti, o.numRoundVinti);
+        return Integer.compare(this.numRoundsWon, o.numRoundsWon);
     }
 }

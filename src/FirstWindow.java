@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 public class FirstWindow extends JFrame implements ListSelectionListener {
 
@@ -80,7 +82,7 @@ public class FirstWindow extends JFrame implements ListSelectionListener {
             JList source = (JList) e.getSource();
             String supp = source.getSelectedValue().toString();
             Game g = new Game(new ArrayList<>(), new Deck(), new Table());
-            g.playGame(Integer.parseInt(supp));
+            g.playGame();
         }
     }
 

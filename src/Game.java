@@ -2,16 +2,68 @@ import java.util.*;
 
 public class Game {
 
-    private List<Player> players;
+    private Collection<Player> players;
     private Deck deck;
     private Table table;
 
-    public Game(ArrayList<Player> players, Deck deck, Table table) {
+    public Game(Collection<Player> players, Deck deck, Table table) {
         this.players = players;
         this.deck = deck;
         this.table = table;
     }
 
+    private void setNumPlayers() {
+        Scanner scan = new Scanner(System.in);
+        int nPlayers;
+        do {
+            System.out.print("Select the number of players -> ");
+            nPlayers = scan.nextInt();
+        } while (nPlayers < 2 || nPlayers > 8);
+        for (int i = 0; i < nPlayers; i++)
+            players.add(new Player());
+    }
+
+    private void setPlayersName() {
+        Scanner scan = new Scanner(System.in);
+        int i = 0;
+        for (Player p : players) {
+            System.out.print("Player [" + ++i + "] select your name -> ");
+            String name = scan.nextLine();
+            p.setName(name);
+        }
+    }
+
+    private void printInit() {
+        System.out.println("+-------+-------+-------+-------+");
+        System.out.println("| BISCA | BISCA | BISCA | BISCA |");
+        System.out.println("+-------+-------+-------+-------+");
+    }
+
+    private void playRound(int level) {
+        Scanner scan = new Scanner(System.in);
+        for (int round = level; round > 0; round--) {
+            for (Player p : players) {
+                p.printHand();
+                System.out.print("Select your card -> ");
+                p.play(table, scan.nextInt());
+            }
+        }
+    }
+
+    public void playGame() {
+        printInit();
+        setNumPlayers(); // Initialize the number of players
+        setPlayersName(); // Initialize the players name
+        for (int level = 5; level > 0; level--) {
+            deck.shuffleDeck();
+            for (Player p : players) {
+                p.drawCards(deck, level);
+            }
+            playRound(level);
+        }
+    }
+
+    /*
     public void playGame(int numPlayers) {
 
         Scanner in = new Scanner(System.in);
@@ -49,25 +101,25 @@ public class Game {
                     }
 
                     Player roundWinner = table.recordRound();
-                    roundWinner.increaseWinRound();
+                    roundWinner.wonRound();
                 }
 
                 Iterator<Player> iterator = players.iterator();
                 while (iterator.hasNext()) {
                     Player p = iterator.next();
-                    if (p.getNumRoundVinti() != p.getNumOfCards()) {
+                    if (p.getNumRoundsWon() != p.getNoCards()) {
                         p.loseLife();
-                        if (p.getHearts() == 0) iterator.remove();
+                        if (p.getLives() == 0) iterator.remove();
                     }
                 }
             }
         }
     }
+     */
 
-    private void printInit() {
-        System.out.println("+-------+-------+-------+-------+");
-        System.out.println("| BISCA | BISCA | BISCA | BISCA |");
-        System.out.println("+-------+-------+-------+-------+");
+    public static void main(String[] args) {
+        Game g = new Game(new ArrayList<>(), new Deck(), new Table());
+        g.playGame();
     }
 
 }
