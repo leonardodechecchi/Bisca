@@ -2,11 +2,11 @@ import java.util.*;
 
 public class Game {
 
-    private Collection<Player> players;
+    private ArrayList<Player> players;
     private Deck deck;
     private Table table;
 
-    public Game(Collection<Player> players, Deck deck, Table table) {
+    public Game(ArrayList<Player> players, Deck deck, Table table) {
         this.players = players;
         this.deck = deck;
         this.table = table;
@@ -39,13 +39,33 @@ public class Game {
         System.out.println("+-------+-------+-------+-------+");
     }
 
-    private void playRound(int level) {
+    private void playRound(int currentRound) {
         Scanner scan = new Scanner(System.in);
-        for (int round = level; round > 0; round--) {
+        for (Player p : players) {
+            p.printHand();
+            System.out.print(p.getName() + " select the number of hands -> ");
+            p.setNumCards(scan.nextInt());
+        }
+        for (int round = currentRound; round > 0; round--) {
             for (Player p : players) {
                 p.printHand();
-                System.out.print("Select your card -> ");
-                p.play(table, scan.nextInt());
+                System.out.print(p.getName() + " select your card -> ");
+                p.play(table, scan.nextInt() - 1);
+            }
+        }
+        Player roundWinner = table.recordRound();
+        roundWinner.wonRound();
+        Collections.sort(players); // the player who won is now the first player
+    }
+
+    private void setResult() {
+        Iterator<Player> iterator = players.iterator();
+        while (iterator.hasNext()) {
+            Player p = iterator.next();
+            if (p.getNumRoundsWon() != p.getNumCards()) {
+                p.loseLife();
+                System.out.println(p.getName() + " lost a life");
+                if (p.getLives() == 0) iterator.remove();
             }
         }
     }
@@ -54,12 +74,13 @@ public class Game {
         printInit();
         setNumPlayers(); // Initialize the number of players
         setPlayersName(); // Initialize the players name
-        for (int level = 5; level > 0; level--) {
+        for (int round = 5; round > 0; round--) {
             deck.shuffleDeck();
             for (Player p : players) {
-                p.drawCards(deck, level);
+                p.drawCards(deck, round);
             }
-            playRound(level);
+            playRound(round);
+            setResult();
         }
     }
 

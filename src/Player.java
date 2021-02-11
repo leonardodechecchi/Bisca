@@ -28,14 +28,18 @@ public class Player implements Comparable<Player> {
         return this.numRoundsWon;
     }
 
-    public void setNumCards(int numOfCards, int turn) {
-        if (numOfCards >= 0 && numOfCards <= turn)
+    public void setNumCards(int numOfCards) {
+        if (numOfCards >= 0)
             this.numCards = numOfCards;
         else throw new IllegalArgumentException();
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public void wonRound() {
@@ -62,6 +66,7 @@ public class Player implements Comparable<Player> {
 
     public void printHand() {
         int i = 0;
+        System.out.println();
         for (Cards c : hand) {
             System.out.println("[" + ++i + "]" + c.toString());
         }
