@@ -3,18 +3,18 @@ import java.util.Collections;
 
 public class Deck {
 
-    private ArrayList<Cards> deck;
+    private ArrayList<Card> deck;
 
     public Deck() {
         deck = new ArrayList<>();
-        for (Seeds s : Seeds.values()) {
-            for (Values v : Values.values()) {
-                deck.add(new Cards(s, v));
+        for (Suit s : Suit.values()) {
+            for (Value v : Value.values()) {
+                deck.add(new Card(s, v));
             }
         }
     }
 
-    public Cards getCardAtIndex(int index) {
+    public Card getCardAtIndex(int index) {
         return deck.get(index);
     }
 

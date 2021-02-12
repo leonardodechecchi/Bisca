@@ -3,29 +3,29 @@ import java.util.Map;
 
 public class Table {
 
-    private HashMap<Cards, Player> table;
+    private HashMap<Card, Player> table;
 
     public Table() {
         table = new HashMap<>();
     }
 
-    public void addCard(Cards c, Player p) {
+    public void putCard(Card c, Player p) {
         table.put(c, p);
     }
 
-    public Player recordRound() {
+    public Player winner() {
         Player winner = null;
-        int maxSeedsValue = 0;
+        int maxSuitsValue = 0;
         int maxValuesValue = 0;
-        for (Map.Entry<Cards, Player> entry : table.entrySet()) {
-            if (entry.getKey().getSeedsValue() > maxSeedsValue) {
-                maxSeedsValue = entry.getKey().getSeedsValue();
+        for (Map.Entry<Card, Player> entry : table.entrySet()) {
+            if (entry.getKey().getSuitsValue() > maxSuitsValue) {
+                maxSuitsValue = entry.getKey().getSuitsValue();
                 maxValuesValue = entry.getKey().getValuesValue();
                 winner = entry.getValue();
             }
-            else if (entry.getKey().getSeedsValue() == maxSeedsValue) {
+            else if (entry.getKey().getSuitsValue() == maxSuitsValue) {
                 if (entry.getKey().getValuesValue() > maxValuesValue) {
-                    maxSeedsValue = entry.getKey().getSeedsValue();
+                    maxSuitsValue = entry.getKey().getSuitsValue();
                     maxValuesValue = entry.getKey().getValuesValue();
                     winner = entry.getValue();
                 }

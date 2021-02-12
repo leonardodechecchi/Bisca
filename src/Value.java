@@ -1,4 +1,4 @@
-public enum Values {
+public enum Value {
 
     ASSO(1),
     DUE(2),
@@ -11,9 +11,9 @@ public enum Values {
     CAVALLO(9),
     RE(10);
 
-    private int value;
+    private final int value;
 
-    Values(int value) {
+    Value(int value) {
         this.value = value;
     }
 

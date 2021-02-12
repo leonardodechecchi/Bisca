@@ -5,8 +5,6 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 
 public class FirstWindow extends JFrame implements ListSelectionListener {
 
