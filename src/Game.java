@@ -21,7 +21,7 @@ public class Game {
             numPlayers = scan.nextInt();
         } while (numPlayers < 2 || numPlayers > 8);
         for (int i = 0; i < numPlayers; i++)
-            players.add(new Player());
+            players.add(new Player(i + 1));
     }
 
     // set the name for each player
@@ -57,12 +57,12 @@ public class Game {
             }
             Player handWinner = table.winner();
             handWinner.wonHand();
-            Collections.sort(players); // the player who won is now the first player
         }
     }
 
     private void setResult() {
         Iterator<Player> iterator = players.iterator();
+        ArrayList<Player> supp = new ArrayList<>();
         while (iterator.hasNext()) {
             Player p = iterator.next();
             if (p.getHandsTaken() != p.getNumCards()) {

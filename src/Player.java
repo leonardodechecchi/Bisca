@@ -4,16 +4,21 @@ public class Player implements Comparable<Player> {
 
     private ArrayList<Card> hand;
     private String name;
+    private int id;
     private int lives;
     private int numCards;
     private int numCardsTaken;
 
-    public Player() {
-        name = getIdentifier();
+    public Player(int id) {
+        this.id = id;
         hand = new ArrayList<>();
         lives = 3;
         numCards = 0;
         numCardsTaken = 0;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     // lives
@@ -73,10 +78,6 @@ public class Player implements Comparable<Player> {
         for (Card c : hand) {
             System.out.println("[" + ++i + "]" + c.toString());
         }
-    }
-
-    public String getIdentifier() {
-        return "Player " + this.hashCode();
     }
 
     public int compareTo(Player o) {
