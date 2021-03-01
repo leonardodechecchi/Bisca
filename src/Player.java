@@ -5,49 +5,17 @@ public class Player implements Comparable<Player> {
     private ArrayList<Card> hand;
     private String name;
     private int id;
-    private int lives;
-    private int numCards;
-    private int numCardsTaken;
+    private Score score;
 
     public Player(int id) {
         this.id = id;
         hand = new ArrayList<>();
-        lives = 3;
-        numCards = 0;
-        numCardsTaken = 0;
+        score = new Score();
     }
 
     public int getId() {
         return this.id;
     }
-
-    // lives
-    public int getLives() {
-        return this.lives;
-    }
-
-    public void loseLife() {
-        this.lives--;
-    }
-
-    // num of cards to take
-    public int getNumCards() {
-        return this.numCards;
-    }
-
-    public void setNumCards(int numOfCards) {
-        this.numCards = numOfCards;
-    }
-
-    // cards taken
-    public int getHandsTaken() {
-        return this.numCardsTaken;
-    }
-
-    public void wonHand() {
-        this.numCardsTaken++;
-    }
-
 
     public String getName() {
         return this.name;
@@ -57,19 +25,11 @@ public class Player implements Comparable<Player> {
         this.name = name;
     }
 
-
     public void drawCards(Deck d, int numCards) {
         for (int i = 0; i < numCards; i++) {
             hand.add(d.getCardAtIndex(0));
             d.removeCardAtIndex(0);
         }
-    }
-
-    public void play(Table t, int index) {
-        if (index < 0 || index > 5)
-            throw new IllegalArgumentException();
-        t.putCard(hand.get(index), this);
-        hand.remove(index);
     }
 
     public void printHand() {
@@ -80,7 +40,40 @@ public class Player implements Comparable<Player> {
         }
     }
 
+    public void play(Table t, int index) {
+        if (index < 0 || index > 5)
+            throw new IllegalArgumentException();
+        t.putCard(hand.get(index), this);
+        hand.remove(index);
+    }
+
     public int compareTo(Player o) {
-        return Integer.compare(this.numCardsTaken, o.numCardsTaken);
+        return Integer.compare(score.numCardsTaken, o.score.numCardsTaken);
+    }
+
+    /* SCORE */
+
+    public int getLives() {
+        return score.lives;
+    }
+
+    public void loseLife() {
+        score.lives--;
+    }
+
+    public int getNumCards() {
+        return score.numCards;
+    }
+
+    public void setNumCards(int numOfCards) {
+        score.numCards = numOfCards;
+    }
+
+    public int getHandsTaken() {
+        return score.numCardsTaken;
+    }
+
+    public void wonHand() {
+        score.numCardsTaken++;
     }
 }
